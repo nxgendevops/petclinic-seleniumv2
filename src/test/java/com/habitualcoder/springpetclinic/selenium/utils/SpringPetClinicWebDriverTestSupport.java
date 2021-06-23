@@ -13,7 +13,8 @@ import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.chrome.ChromeDriver;  
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,9 +45,11 @@ public class SpringPetClinicWebDriverTestSupport extends TestState implements Wi
         if (USE_FIREFOX) {
             driver = new FirefoxDriver();
         } else {
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");  
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");  
             //driver = new HtmlUnitDriver(true);
-            driver=new ChromeDriver(); 
+            ChromeOptions ChromeOptions = new ChromeOptions();
+            ChromeOptions.addArguments("--headless", "window-size=1024,768", "--no-sandbox");
+            driver = new ChromeDriver(ChromeOptions);
         }
         selenium = new WebDriverBackedSelenium(driver, LOCAL_APP_STARTING_URL);
         try {
